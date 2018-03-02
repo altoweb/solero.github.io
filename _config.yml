@@ -1,0 +1,17 @@
+title: Houdini Docs
+email: ben@solero.me
+description: >- 
+  Houdini documentation
+baseurl: "" 
+url: ""
+twitter_username: jekyllrb
+github_username:  jekyll
+
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+destination: public
+source: 
+include: ['_tutorials']
