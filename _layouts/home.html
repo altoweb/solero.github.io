@@ -1,0 +1,110 @@
+---
+layout: default
+---
+
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Houdini Docs
+      </h1>
+      <h2 class="subtitle">
+        Everything you need to setup Houdini
+      </h2>
+    </div>
+  </div>
+</section>
+
+<div class="container section">
+  <div class="columns">
+    <div class="column is-half">
+      <h1 class="title">Advanced, high-performance, Club Penguin server emulation.</h1>
+      <small>
+        On March 29th 2017, the Club Penguin MMO was shut down to make way for Disney's new virtual world, <a href="http://clubpenguinisland.com" target="_blank">Club Penguin Island</a>.
+        In light of this, the Solero community has worked to try and restore the now defunct game back to the web, by reverse engineering the game server and providing the community
+        with the tools required to create their own Club Penguin world.
+      </small>
+    </div>
+    <div class="column is-half">
+      <video id="frontVideo" height="300" autoplay loop>
+        <source src="{{ "/assets/images/front.mp4" | relative_url }}" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+<hr class="is-marginless">
+<div class="container section">
+  <h2 class="title is-size-4">Get Started</h2>
+  <h2 class="subtitle is-size-6">It isn't rocket science, most of the hard work is already done for you!</h2>
+  <article class="media is-large">
+    <div class="media-left">
+      <p class="title is-6">1</p>
+    </div>
+    <div class="media-content">
+      <p class="title is-6">
+        Install a media server:
+      </p>
+{% highlight shell %}
+$ wget -q https://icer.ink/.repo/legacy/setup && sudo bash setup
+{% endhighlight %}
+    </div>
+  </article>
+
+  <article class="media is-large">
+    <div class="media-left">
+      <p class="title is-6">2</p>
+    </div>
+    <div class="media-content">
+      <p class="title is-6">
+        Install houdini:
+      </p>
+{% highlight shell %}
+$ git clone https://github.com/solero/houdini ~/houdini
+$ pip install -r ~/houdini/requirements.txt
+{% endhighlight %}
+    </div>
+  </article>
+  <br>
+  <a href=""><p>It's not quite <em>that</em> simple though...</p></a>
+</div>
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+
+      <div class="columns">
+          <div class="column">
+            <h2 class="title is-size-4">Need help?</h2>
+            <h2 class="subtitle is-size-6">Are you stuck? Don't worry, there's tons of places to get help from.</h2>
+          </div>
+          <div class="column is-narrow">
+            <a class="button is-large is-primary is-inverted is-rounded" href="https://discordapp.com/invite/UPnWKfh" target="_blank">
+              <span class="icon">
+                <i class="fab fa-discord"></i>
+              </span>
+              <span>Discord</span>
+            </a>
+          </div>
+          <div class="column is-narrow">
+            <a class="button is-large is-primary is-inverted is-rounded" href="https://solero.me" target="_blank">
+                <span class="icon">
+                  <i class="fas fa-quote-left"></i>
+                </span>
+                <span>Forums</span>
+            </a>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<div class="container section">
+  <article class="message is-danger">
+    <div class="message-body">
+      Creating public Club Penguin private servers, of any kind, is <strong>against US copyright law!</strong> and is illegal
+      in most countries. Disney has been known to actively persue private servers in the past and have them taken down.
+      When opening a private server to the public, you are doing so at your own risk, all the game media, graphics, assets etc
+      on a private server belong solely to Disney Canada Inc.
+    </div>
+  </article>
+</div>

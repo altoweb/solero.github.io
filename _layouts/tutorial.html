@@ -1,0 +1,34 @@
+---
+layout: default
+---
+
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Legacy setup
+      </h1>
+    </div>
+  </div>
+</section>
+
+<div class="section container">
+  <div class="columns">
+      <div class="column">
+        <div class="content">
+          {{ content }}
+        </div>
+      </div>
+      <div class="column is-narrow">
+        <aside class="menu">
+        {% for item in page.menu %}
+          {% assign children=item[1] %}
+          <p class="menu-label">
+            {{ children.first[1] }}
+          </p>
+          {% include menu.html children=children %}
+        {% endfor %}
+        </aside>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<article class="message is-{{ include.type }}">
+  {% if include.title %}
+  <div class="message-header">
+    <p>{{ include.title }}</p>
+  </div>
+  {% endif %}
+  <div class="message-body">
+    {{ include.content | markdownify }}
+  </div>
+</article>

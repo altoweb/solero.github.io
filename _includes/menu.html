@@ -1,0 +1,13 @@
+<ul class="menu-list">
+  {% for item in include.children offset:1 %}
+    {% assign children=item[1] %}
+    {% if children.first %}
+      <li>
+        <a href="#{{ item[0] }}">{{ children.first[1] }}</a>
+        {% include menu.html children=children %}
+      </li>
+    {% else %}
+      <li><a href="#{{ item[0] }}">{{ item[1] }}</a></li>
+    {% endif %}
+  {% endfor %}
+</ul>

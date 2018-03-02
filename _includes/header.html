@@ -1,0 +1,60 @@
+<nav class="navbar is-link" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/">
+            <h2>Houdini Docs</h2>
+          </a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" href="#">
+              Docs
+            </a>
+            <div id="docsDropdown" class="navbar-dropdown is-boxed">
+              <a class="navbar-item" href="/tutorial/legacy">
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-48x48">
+                      <img src="{{ "/assets/images/legacy.png" | relative_url }}">
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <p>
+                      <strong>Legacy</strong>
+                      <br>
+                      <small>See the documentation on creating legacy ActionScript 2 Houdini instance.</small>
+                    </p>
+                  </div>
+                </article>
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item">
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-48x48">
+                      <img src="{{ "/assets/images/vanilla.png" | relative_url }}">
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <p>
+                      <strong>Vanilla</strong>
+                      <br>
+                      <small>
+                        See the documentation on creating vanilla ActionScript 3 Houdini instance.
+                      </small>
+                    </p>
+                  </div>
+                </article>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <a class="navbar-item is-hidden-desktop-only" href="https://github.com/solero/houdini" target="_blank">
+            <span class="icon">
+              <i class="fab fa-github fa-lg"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+  </div>
+</nav>
