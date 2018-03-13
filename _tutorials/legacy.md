@@ -198,9 +198,9 @@ Next, you probably want to make it so Houdini will continue running even after y
 
 ```shell
 cd ~/houdini
-screen -S login Login.py
+screen -S login python Login.py
 # Now press Ctrl+A D (cmd A D on Mac OS) to detach from session
-screen -S world World.py
+screen -S world python World.py
 # Now press Ctrl+A D (cmd A D on Mac OS) to detach from session
 ```
 
