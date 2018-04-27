@@ -160,6 +160,35 @@ See those orange clouds on the right? If those are grey you are not benefitting 
 
 This is a breif overview of how to configure CloudFlare, however CloudFlare provides a [much more detailed setup guide here](https://support.cloudflare.com/hc/en-us/categories/200275218-Getting-Started){:target="_blank"}.
 
+### Setting up the login
+To make the login work, you must edit a file and add to your firewall.
+```shell
+sudo nano //var/www/play/index.html
+```
+This should open up a text editor.
+```json
+...
+ function loadCP() {
+          var game = document.querySelector("#game");
+          var worlds = new Object();
+          worlds[100] = { id: 100, name: "Blizzard", ip: "iphere", is_safe: false, port: 9875 }
+          game.startup("iphere", 6112, host, "en", worlds);
+      }
+
+...
+```
+Add your server's ip where it says iphere.
+
+Hit `Ctrl+X` (`cmd X` on MacOS) and then `y`, then enter to save.
+
+Now, run the commands:
+```shell
+sudo ufw allow 6112
+sudo ufw allow 9875
+sudo ufw enable
+```
+
+That should be it for setting up the login.
 ### Running Houdini
 
 First, navigate to the Houdini installation directory and check Houdini is actually installed correctly.
