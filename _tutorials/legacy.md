@@ -166,7 +166,7 @@ To make the login work, you must edit a file and add to your firewall.
 sudo nano /var/www/play/index.html
 ```
 This should open up a text editor.
-```json
+```javascript
 ...
  function loadCP() {
           var game = document.querySelector("#game");
