@@ -163,7 +163,7 @@ This is a breif overview of how to configure CloudFlare, however CloudFlare prov
 ### Setting up the login
 To make the login work, you must edit a file and add to your firewall.
 ```shell
-sudo nano //var/www/play/index.html
+sudo nano /var/www/play/index.html
 ```
 This should open up a text editor.
 ```json
@@ -177,7 +177,7 @@ This should open up a text editor.
 
 ...
 ```
-Add your server's ip where it says iphere.
+Add your server's IP address where it says iphere. If hosting locally, make it 127.0.0.1
 
 Hit `Ctrl+X` (`cmd X` on MacOS) and then `y`, then enter to save.
 
