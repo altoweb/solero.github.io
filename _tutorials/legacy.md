@@ -35,7 +35,7 @@ menu:
 
 # Setup legacy AS2 private server
 ## Introduction
-Welcome to the setup guide for legacy AS2 private servers. This guide is for the Ubuntu operating system and it helps if you have basic understanding of a UNIX-like terminal, it definitely **is not** a requirement but it certainly helps. If you have never used Linux before, now is an exellent opportunity to learn! In fact, not only is it a really useful skill for guides such as this, but it is handy information to know when dealing with computers in general.
+Welcome to the setup guide for legacy AS2 private servers. This guide is for the Ubuntu operating system and it helps if you have basic understanding of a UNIX-like terminal, it definitely **is not** a requirement but it certainly helps. If you have never used Linux before, now is an excellent opportunity to learn! In fact, not only is it a really useful skill for guides such as this, but it is handy information to know when dealing with computers in general.
 
 If you do not have access to a machine running Ubuntu, you may run a virtual machine to test locally or alternatively, follow [our other OS specific guides](/tutorial).
 
@@ -43,15 +43,15 @@ If you do not have access to a machine running Ubuntu, you may run a virtual mac
 - A server, desktop or virtual machine running Ubuntu 16.04 or higher
   - For best performance this machine should probably have at least **1GB** of memory.
 - An internet connection
-- A brain
+- A brain (pretty important)
 
 {% capture message %}
 If you want to host your private server for everyone to play you are also going to need the following requirements.
 
 - A VPS or dedicated server running Ubuntu 16.04 or higher
-  - [See here](#reccomended-hosting-providers) for a list of reccomended hosting providers. *Do not use free VPS providers!* *You cannot use normal web hosting to run a public private server!*
+  - [See here](#reccomended-hosting-providers) for a list of recommended hosting providers. *Do not use free VPS providers!* *You cannot use normal web hosting to run a public private server!*
 - A domain name
-  - This is the URL others will go to to find your server. You can buy them [here](http://namecheap.com){:target="_blank"}.
+  - This is the URL others will go to to find your server (ex: mycpps.com). You can buy them [here](http://namecheap.com){:target="_blank"}.
 - An SSH client
   - This is how you will communicate with your server. If you're using windows to connect you can use [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html){:target="_blank"}. MacOS users may use [open ssh](http://accc.uic.edu/answer/how-do-i-use-ssh-and-sftp-mac-os-x){:target="_blank"}, just open the terminal and type `ssh root@vpsiphere`.
 {% endcapture %}
@@ -61,6 +61,11 @@ If you want to host your private server for everyone to play you are also going 
 ## Setup
 
 ### Install packages
+Before we begin, it's always a good idea to update your package list before starting to install packages. Update them by running this command.
+```shell
+sudo apt-get update 
+```
+
 The very first step is to install all the required Ubuntu packages. Here is a command that gets all this out the way in a single blow!
 ```shell
 sudo apt-get install nginx python2.7 python-pip python-dev mariadb-server libmariadbclient-dev redis-server git unzip wget sed 
@@ -84,7 +89,7 @@ In order to create a private server you'll need a media server, this is a collec
 wget -q https://icer.ink/.repo/legacy/setup && sudo bash setup
 ```
 
-This may take a while to complete depending on your machines connection, sit back and av' a cuppa' while it completes!
+This may take a while to complete depending on your machine's connection, sit back and av' a cuppa' while it completes!
 
 After a while the media server setup script will ask you to enter "hostname", if you're making a public private server, then you will enter your domain name here (ex. `iclubpenguin.com`), otherwise just press enter.
 
@@ -134,8 +139,47 @@ Use your arrow keys to move the cursor inbetween the quotes following password, 
 
 `"Password": "your_mysql_password_here",`
 
+If your are hosting locally, that's it for this step. Save and exit by following these steps:
 Hit `Ctrl+X` (`cmd X` on MacOS) and then `y`, then enter to save.
 
+However, if you are hosting on a VPS, don't save yet and continue on.
+
+In the same houdini.conf file, you will find the following section of code.
+```json
+...
+	"Servers": {
+		"Login": {
+			"Address": "127.0.0.1",
+			"Port": 6112,
+			"World": false,
+			"Plugins": [
+			    "Example"
+			],
+			"Logging": {
+				"General": "logs/login.log",
+				"Errors": "logs/login-errors.log",
+				"Level": "INFO"
+			},
+			"LoginFailureLimit": 5,
+			"LoginFailureTimer": 3600
+		},
+		"Wind": {
+		    "Id": "100",
+			"Address": "127.0.0.1",
+			"Port": 9875,
+			"World": true,
+			"Capacity": 200,
+			"CacheExpiry": 3600,
+			"Plugins": [
+				"Commands",
+				"Bot",
+				"Rank"
+			],
+...
+```
+
+Where it says 127.0.0.1, replace it with the IP of your VPS, then save by following these steps:
+Hit `Ctrl+X` (`cmd X` on MacOS) and then `y`, then enter to save.
 ### Configuring subdomains
 {% capture message %}
 You do not need to follow these steps if you are **not** hosting **publicly**, skip this step if you are hosting locally!
