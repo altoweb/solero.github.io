@@ -324,7 +324,7 @@ As a basic security precaution, it is important that you setup a firewall.
 
 ```shell
 sudo apt-get install ufw
-sudo ufw allow 6112,9875,22,80,443
+sudo ufw allow 6112,9875,22,80,443/tcp
 sudo ufw enable
 ```
 
