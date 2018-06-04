@@ -1,4 +1,5 @@
 ---
+title: Legacy Setup
 layout: tutorial
 permalink: /tutorial/legacy/
 menu:
@@ -27,6 +28,8 @@ menu:
       restarting-houdini: "Restarting Houdini"
       installing-plugins: "Installing plugins"
       updating-houdini: "Updating Houdini"
+    securing-your-server:
+      name: "Securing your server"
   miscellaneous:
     name: "Miscellaneous"
     reccomended-hosting-providers: "Reccomended hosting providers"
@@ -43,7 +46,7 @@ If you do not have access to a machine running Ubuntu, you may run a virtual mac
 - A server, desktop or virtual machine running Ubuntu 16.04 or higher
   - For best performance this machine should probably have at least **1GB** of memory.
 - An internet connection
-- A brain (pretty important)
+- A brain
 
 {% capture message %}
 If you want to host your private server for everyone to play you are also going to need the following requirements.
@@ -68,7 +71,8 @@ sudo apt-get update
 
 The very first step is to install all the required Ubuntu packages. Here is a command that gets all this out the way in a single blow!
 ```shell
-sudo apt-get install nginx python2.7 python-pip python-dev mariadb-server libmariadbclient-dev redis-server git unzip wget sed 
+sudo apt-get install nginx python2.7 python-pip python-dev python-setuptools mariadb-server libmariadbclient-dev redis-server 
+git unzip wget sed gcc
 ```
 
 You will likely be asked to enter your password, do not be startled when the password doesn't show as you type, just type the password and press enter. If you are asked if you wish to continue, type `y` and then enter.
@@ -93,6 +97,8 @@ This may take a while to complete depending on your machine's connection, sit ba
 
 After a while the media server setup script will ask you to enter "hostname", if you're making a public private server, then you will enter your domain name here (ex. `iclubpenguin.com`), otherwise just press enter.
 
+The script will next ask you to enter your external IP address, if you are making a public private server, then you will enter your VPS' external IP here (ex. `74.125.224.72`), otherwise just press enter.
+
 ### Install Houdini
 Now we're going to install Houdini, this process is pretty simple.
 ```shell
@@ -110,6 +116,14 @@ sudo mysql -u root -p -e "create database Houdini";
 
 If you're prompted for your password, enter your MySQL database password that you set when you ran `sudo mysql_secure_installation`, and press enter. If you didn't set a MySQL database password, just press enter.
 
+{% capture passwordmsg %}
+Occasionally you won't be able to login to MySQL even after setting your password, you may get `Access denied for user 'root'@'localhost' (using password: YES)` error.
+
+If this happens to you, you must stop the MySQL server and start with `--skip-grant-tables` flag to gain access and reset the root password. You can follow [this tutorial](https://stackoverflow.com/questions/20353402/access-denied-for-user-testlocalhost-using-password-yes-except-root-user){:target="_blank"} to learn how to do this.
+{% endcapture %}
+
+{% include message.html type="info" content=passwordmsg %}
+
 Now, let's install the `houdini.sql` on the database we've just created. You will likely be asked to enter your MySQL password once again.
 
 ```shell
@@ -121,17 +135,18 @@ sudo mysql -u root -p Houdini < ~/houdini/houdini.sql
 Now we have to configure Houdini, for the purpose of this tutorial, you just need to edit one line, however Houdini actually has lots more configuration options which you may play around with.
 
 ```shell
-nano ~/houdini/houdini.conf
+nano ~/houdini/config.py
 ```
 
 This brings up a terminal text editor, you should see some lines, near the top, which look similar to this.
-```json
+```python
 ...
 "Database": {
         "Address": "localhost",
         "Username": "root",
         "Password": "",
-        "Name": "Houdini"
+        "Name": "Houdini",
+        "Driver": "PyMySQL" if sys.platform == "win32" else "MySQLdb"
 },
 ...
 ```
@@ -139,47 +154,9 @@ Use your arrow keys to move the cursor inbetween the quotes following password, 
 
 `"Password": "your_mysql_password_here",`
 
-If your are hosting locally, that's it for this step. Save and exit by following these steps:
+Save and exit by following these steps:
 Hit `Ctrl+X` (`cmd X` on MacOS) and then `y`, then enter to save.
 
-However, if you are hosting on a VPS, don't save yet and continue on.
-
-In the same houdini.conf file, you will find the following section of code.
-```json
-...
-	"Servers": {
-		"Login": {
-			"Address": "127.0.0.1",
-			"Port": 6112,
-			"World": false,
-			"Plugins": [
-			    "Example"
-			],
-			"Logging": {
-				"General": "logs/login.log",
-				"Errors": "logs/login-errors.log",
-				"Level": "INFO"
-			},
-			"LoginFailureLimit": 5,
-			"LoginFailureTimer": 3600
-		},
-		"Wind": {
-		    "Id": "100",
-			"Address": "127.0.0.1",
-			"Port": 9875,
-			"World": true,
-			"Capacity": 200,
-			"CacheExpiry": 3600,
-			"Plugins": [
-				"Commands",
-				"Bot",
-				"Rank"
-			],
-...
-```
-
-Where it says 127.0.0.1, replace it with the IP of your VPS, then save by following these steps:
-Hit `Ctrl+X` (`cmd X` on MacOS) and then `y`, then enter to save.
 ### Configuring subdomains
 {% capture message %}
 You do not need to follow these steps if you are **not** hosting **publicly**, skip this step if you are hosting locally!
@@ -204,35 +181,6 @@ See those orange clouds on the right? If those are grey you are not benefitting 
 
 This is a breif overview of how to configure CloudFlare, however CloudFlare provides a [much more detailed setup guide here](https://support.cloudflare.com/hc/en-us/categories/200275218-Getting-Started){:target="_blank"}.
 
-### Setting up the login
-To make the login work, you must edit a file and add to your firewall.
-```shell
-sudo nano /var/www/play/index.html
-```
-This should open up a text editor.
-```javascript
-...
- function loadCP() {
-          var game = document.querySelector("#game");
-          var worlds = new Object();
-          worlds[100] = { id: 100, name: "Blizzard", ip: "iphere", is_safe: false, port: 9875 }
-          game.startup("iphere", 6112, host, "en", worlds);
-      }
-
-...
-```
-Add your server's IP address where it says iphere. If hosting locally, make it 127.0.0.1
-
-Hit `Ctrl+X` (`cmd X` on MacOS) and then `y`, then enter to save.
-
-Now, run the commands:
-```shell
-sudo ufw allow 6112
-sudo ufw allow 9875
-sudo ufw enable
-```
-
-That should be it for setting up the login.
 ### Running Houdini
 
 First, navigate to the Houdini installation directory and check Houdini is actually installed correctly.
@@ -305,7 +253,82 @@ Congratulations! You've created your first Club Penguin private server! Now that
 
 ### User registration
 
-At the moment, nobody can register for your private server, let's fix that.
+At the moment, nobody can register for your private server, [click here](/tutorial/legacy/registration) to learn how to setup a basic registration page.
+
+### Managing the database
+Taking control of your database is very useful for managing your player accounts.
+#### DataGrip
+[DataGrip](https://www.jetbrains.com/datagrip/){:target="_blank"} is an program made by JetBrains which allows you to see a graphical representation of your database, making it super easy to manage. DataGrip is the reccomended way to manage your database since you can connect via an SSH tunnel, which is considered by many to be the most secure way to connect to a remote MySQL database.
+
+[See here](https://www.jetbrains.com/help/datagrip/connecting-to-a-database.html#connect_via_ssh){:target="_blank"} to learn how to connect to your database via SSH.
+
+#### PHPMyAdmin
+
+PHPMyAdmin is considered a fanstastic and easy way to manage your database remotely. It is a web-based application used by many developers around the world. [See here](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04){:target="_blank"} to learn how to setup PHPMyAdmin with nginx.
+
+### Managing Houdini
+#### Restarting Houdini
+Sometimes it is necessary to restart your Houdini server(s) for some reason. This can be done by stopping the screen session and running Houdini again.
+
+```shell
+# Stop houdini
+screen -r world
+# Now press Ctrl+C to kill Houdini world server gracefully
+screen -r login
+# Now press Ctrl+C to kill Houdini login server gracefully
+
+# Start houdini
+cd ~/houdini
+screen -S login python Login.py
+# Now press Ctrl+A D (cmd A D on Mac OS) to detach from session
+screen -S world python World.py
+# Now press Ctrl+A D (cmd A D on Mac OS) to detach from session
+```
+&nbsp;
+
+#### Installing plugins
+There is currently no installer or central repository for Houdini plugins (although it has been planned).
+
+If you do have plugins which you wish to install, they can be installed simply by copying them to `~/houdini/Houdini/Plugins/`. Houdini can hot-load new plugins so a restart is not normally required.
+
+Example plugin directory structure:
+
+```
+Plugins $ tree
+.
+├── Bot
+│   ├── __init__.py
+```
+&nbsp;
+
+#### Updating Houdini
+Updating Houdini is super easy thanks to Git.
+
+```
+cd ~/houdini
+git stash
+git pull
+git stash pop
+```
+
+After updating you normally want to [restart Houdini](#restarting-houdini)
+
+### Securing your server
+{% capture message %}
+You do not need to follow these steps if you are **not** hosting **publicly**, skip this step if you are hosting locally!
+{% endcapture %}
+
+{% include message.html type="danger" content=message %}
+
+As a basic security precaution, it is important that you setup a firewall.
+
+```shell
+sudo apt-get install ufw
+sudo ufw allow 6112,9875,22,80,443
+sudo ufw enable
+```
+
+There are [**many** other security precautions](https://www.google.com/search?q=secure+ubuntu+server){:target="_blank"} you can take to secure your server from attackers, and you must take some time now to make sure your server is safe for users to play.
 
 ## Miscellaneous
 
@@ -321,3 +344,5 @@ These resources and tools are not required for this tutorial, but you will find 
 - [Adobe Flash CS6](https://helpx.adobe.com/uk/x-productkb/policy-pricing/cs6-product-downloads.html){:target="_blank"} *(Adobe Flash CC, Adobe Animate, and any version of Adobe Flash newer than CS6 is no use to you for private server development.)*
 - [JPEX Free Flash Decompiler](https://www.free-decompiler.com/flash/){:target="_blank"} - Perhaps the most useful tool in the world for dealing with SWF files.
 - [FileZilla](https://filezilla-project.org/){:target="_blank"} - Or any FTP client, just like SSH but gives you a GUI to view & manage files on your server.
+
+You should know that this tutorial does not go into exhaustive detail about running and maintaining a private server. It is assumed you are doing this for fun, and as a learning experience, chances are that if you needed this tutorial, you won't be creating the next big Club Penguin private server to replace Club Penguin.
