@@ -1,7 +1,7 @@
 ---
-title: Legacy Setup
+title: Ubuntu Legacy Setup
 layout: tutorial
-permalink: /tutorial/legacy/
+permalink: /tutorial/legacy/ubuntu
 menu:
   introduction:
     name: "Introduction"
@@ -40,7 +40,7 @@ menu:
 ## Introduction
 Welcome to the setup guide for legacy AS2 private servers. This guide is for the Ubuntu operating system and it helps if you have basic understanding of a UNIX-like terminal, it definitely **is not** a requirement but it certainly helps. If you have never used Linux before, now is an excellent opportunity to learn! In fact, not only is it a really useful skill for guides such as this, but it is handy information to know when dealing with computers in general.
 
-If you do not have access to a machine running Ubuntu, you may run a virtual machine to test locally or alternatively, follow [our other OS specific guides](/tutorial).
+If you do not have access to a machine running Ubuntu, you may run a virtual machine to test locally or alternatively, follow [our other OS specific guides](/tutorial/legacy){:target="_blank"}.
 
 #### Requirements:
 - A server, desktop or virtual machine running Ubuntu 16.04 or higher
@@ -170,7 +170,7 @@ The final step is to point two subdomains `media.example.com` and `play.example.
 
 Once you've setup your domain with CloudFlare and updated your DNS with namecheap (or whoever your domain registrar is), head over to the DNS page for your domain on the [CloudFlare control panel](https://www.cloudflare.com/a/overview){:target="_blank"}. At a **bare minimum** for your private server to function properly you'll need the following A records.
 
-![a records](https://i.imgur.com/Bzej4YL.png)
+![a records](/assets/images/ubuntu/cloudflare.png)
 
 Where `example.com` is your domain name and `127.0.0.1` is the IP address of your VPS or dedicated server.
 
@@ -229,7 +229,7 @@ Now you may exit your command prompt or terminal. Houdini is installed.
 
 ### Test your server
 
-![testing](https://i.imgur.com/r4eoWoP.png)
+![testing](/assets/images/ubuntu/testing.png)
 
 Yay! It's finally time to test your server! If you've configured your server locally, simply go to `http://play.localhost` in your web browser!
 {% capture message %}

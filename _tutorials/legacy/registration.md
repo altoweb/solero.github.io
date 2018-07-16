@@ -19,14 +19,14 @@ menu:
 ## Requirements
 
 {% capture message %}
-**Heads up!** This tutorial assumes you have already setup a private server on Ubuntu using our [setup tutorial](/tutorial/legacy).
+**Heads up!** This tutorial assumes you have already setup a private server on Ubuntu using our [setup tutorial](/tutorial/legacy/ubuntu).
 {% endcapture %}
 
 {% include message.html type="danger" content=message %}
 
 Registration to your private server can be done by creating a new record in the `penguin` table inside your Houdini MySQL database. You can use [this script](https://gist.github.com/ketnipz/048740d381b454e95afe910fb112ef53){:target="_blank"} to emulate the old flash Club Penguin registration form, but you may also write your own registration form if you are familiar with programming by using this [explanation of Houdini password generation](/password){:target="_blank"}. For the purpose of this tutorial, we'll just setup the emulation script.
 
-![registration](https://i.imgur.com/1ix8ncl.png)
+![registration](/assets/images/registration/create_penguin.png)
 
 ## Installing PHP
 
@@ -97,11 +97,11 @@ bb77195f47a12b79e67e5bb6fdca25067b1bdf6e/create_account.php -O /var/play/create_
 
 This registration script requires that you use a reCAPTCHA to protect you from bots. [Go and get invisible reCAPTCHA keys](https://www.google.com/recaptcha/admin){:target="_blank"} from Google.
 
-![captcha](https://i.imgur.com/rxoWxcX.png)
+![captcha](/assets/images/registration/captcha.png)
 
 Fill out the form, make sure **Invisible reCAPTCHA** is checked. Click "Register" and you should now be able to see a site key & a secret key, make a note of these.
 
-![keys](https://i.imgur.com/vRpx6Hf.png)
+![keys](/assets/images/registration/captcha_keys.png)
 
 Next, you must embed the invisible reCAPTCHA on your play page.
 
@@ -169,4 +169,4 @@ Once you have configured your database password, and other relavent information,
 
 That's it! You're done, you should now be able to register accounts.
 
-![accountcreation](https://i.solero.me/Wc4gbNXS.png) 
+![accountcreation](/assets/images/registration/finish.png) 
