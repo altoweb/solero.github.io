@@ -258,7 +258,7 @@ At the moment, nobody can register for your private server, [click here](/tutori
 ### Managing the database
 Taking control of your database is very useful for managing your player accounts.
 #### DataGrip
-[DataGrip](https://www.jetbrains.com/datagrip/){:target="_blank"} is an program made by JetBrains which allows you to see a graphical representation of your database, making it super easy to manage. DataGrip is the reccomended way to manage your database since you can connect via an SSH tunnel, which is considered by many to be the most secure way to connect to a remote MySQL database.
+[DataGrip](https://www.jetbrains.com/datagrip/){:target="_blank"} is a program made by JetBrains which allows you to see a graphical representation of your database, making it super easy to manage. DataGrip is the reccomended way to manage your database since you can connect via an SSH tunnel, which is considered by many to be the most secure way to connect to a remote MySQL database.
 
 [See here](https://www.jetbrains.com/help/datagrip/connecting-to-a-database.html#connect_via_ssh){:target="_blank"} to learn how to connect to your database via SSH.
 
