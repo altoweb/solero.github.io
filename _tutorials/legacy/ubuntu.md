@@ -103,7 +103,7 @@ The script will next ask you to enter your external IP address, if you are makin
 Now we're going to install Houdini, this process is pretty simple.
 ```shell
 git clone https://github.com/solero/houdini ~/houdini
-pip install -r ~/houdini/requirements.txt
+python -m pip install -r ~/houdini/requirements.txt
 ```
 
 ### Create database
