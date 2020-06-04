@@ -90,7 +90,7 @@ When asked to set a root password type `y` and then press enter. Enter your chos
 ### Setting up the media server
 In order to create a private server you'll need a media server, this is a collection of the game assets that make up the Club Penguin client.
 ```shell
-wget -q https://icer.ink/.repo/legacy/setup && sudo bash setup
+wget -q https://skihill.net/.repo/legacy/setup && sudo bash setup
 ```
 
 This may take a while to complete depending on your machine's connection, sit back and av' a cuppa' while it completes!
@@ -102,7 +102,7 @@ The script will next ask you to enter your external IP address, if you are makin
 ### Install Houdini
 Now we're going to install Houdini, this process is pretty simple.
 ```shell
-git clone https://github.com/solero/houdini ~/houdini
+git clone https://github.com/ketnipz/houdini ~/houdini
 python -m pip install -r ~/houdini/requirements.txt
 ```
 
